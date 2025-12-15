@@ -4,14 +4,14 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.3
   creationTimestamp: null
-  name: modelmeshservings.components.platform.opendatahub.io
+  name: modelsasservices.components.platform.opendatahub.io
 spec:
   group: components.platform.opendatahub.io
   names:
-    kind: ModelMeshServing
-    listKind: ModelMeshServingList
-    plural: modelmeshservings
-    singular: modelmeshserving
+    kind: ModelsAsService
+    listKind: ModelsAsServiceList
+    plural: modelsasservices
+    singular: modelsasservice
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -26,7 +26,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ModelMeshServing is the Schema for the modelmeshservings API
+        description: ModelsAsService is the Schema for the modelsasservice API
         properties:
           apiVersion:
             description: |-
@@ -46,37 +46,25 @@ spec:
           metadata:
             type: object
           spec:
-            description: ModelMeshServingSpec defines the desired state of ModelMeshServing
+            description: ModelsAsServiceSpec defines the desired state of ModelsAsService
             properties:
-              devFlags:
-                description: Add developer fields
+              gateway:
+                description: |-
+                  GatewaySpec defines the reference to the global Gateway (Gw API) where
+                  models should be published to when exposed as services.
                 properties:
-                  manifests:
-                    description: List of custom manifests for the given component
-                    items:
-                      properties:
-                        contextDir:
-                          default: manifests
-                          description: contextDir is the relative path to the folder
-                            containing manifests in a repository, default value "manifests"
-                          type: string
-                        sourcePath:
-                          default: ""
-                          description: 'sourcePath is the subpath within contextDir
-                            where kustomize builds start. Examples include any sub-folder
-                            or path: `base`, `overlays/dev`, `default`, `odh` etc.'
-                          type: string
-                        uri:
-                          default: ""
-                          description: uri is the URI point to a git repo with tag/branch.
-                            e.g.  https://github.com/org/repo/tarball/<tag/branch>
-                          type: string
-                      type: object
-                    type: array
+                  name:
+                    description: Name is the name of the gateway.networking.k8s.io/v1/Gateway
+                      resource.
+                    type: string
+                  namespace:
+                    description: Namespace is the namespace name where the gateway.networking.k8s.io/v1/Gateway
+                      resource is.
+                    type: string
                 type: object
             type: object
           status:
-            description: ModelMeshServingStatus defines the observed state of ModelMeshServing
+            description: ModelsAsServiceStatus defines the observed state of ModelsAsService
             properties:
               conditions:
                 items:
@@ -140,29 +128,11 @@ spec:
                 type: integer
               phase:
                 type: string
-              releases:
-                items:
-                  description: ComponentRelease represents the detailed status of
-                    a component release.
-                  properties:
-                    name:
-                      type: string
-                    repoUrl:
-                      type: string
-                    version:
-                      type: string
-                  required:
-                  - name
-                  type: object
-                type: array
-                x-kubernetes-list-map-keys:
-                - name
-                x-kubernetes-list-type: map
             type: object
         type: object
         x-kubernetes-validations:
-        - message: ModelMeshServing name must be default-modelmeshserving
-          rule: self.metadata.name == 'default-modelmeshserving'
+        - message: ModelsAsService name must be default-modelsasservice
+          rule: self.metadata.name == 'default-modelsasservice'
     served: true
     storage: true
     subresources:

@@ -4,14 +4,14 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.3
   creationTimestamp: null
-  name: codeflares.components.platform.opendatahub.io
+  name: mlflowoperators.components.platform.opendatahub.io
 spec:
   group: components.platform.opendatahub.io
   names:
-    kind: CodeFlare
-    listKind: CodeFlareList
-    plural: codeflares
-    singular: codeflare
+    kind: MLflowOperator
+    listKind: MLflowOperatorList
+    plural: mlflowoperators
+    singular: mlflowoperator
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -26,7 +26,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CodeFlare is the Schema for the codeflares API
+        description: MLflowOperator is the Schema for the MLflowOperators API
         properties:
           apiVersion:
             description: |-
@@ -46,36 +46,9 @@ spec:
           metadata:
             type: object
           spec:
-            properties:
-              devFlags:
-                description: Add developer fields
-                properties:
-                  manifests:
-                    description: List of custom manifests for the given component
-                    items:
-                      properties:
-                        contextDir:
-                          default: manifests
-                          description: contextDir is the relative path to the folder
-                            containing manifests in a repository, default value "manifests"
-                          type: string
-                        sourcePath:
-                          default: ""
-                          description: 'sourcePath is the subpath within contextDir
-                            where kustomize builds start. Examples include any sub-folder
-                            or path: `base`, `overlays/dev`, `default`, `odh` etc.'
-                          type: string
-                        uri:
-                          default: ""
-                          description: uri is the URI point to a git repo with tag/branch.
-                            e.g.  https://github.com/org/repo/tarball/<tag/branch>
-                          type: string
-                      type: object
-                    type: array
-                type: object
             type: object
           status:
-            description: CodeFlareStatus defines the observed state of CodeFlare
+            description: MLflowOperatorStatus defines the observed state of MLflowOperator
             properties:
               conditions:
                 items:
@@ -160,8 +133,8 @@ spec:
             type: object
         type: object
         x-kubernetes-validations:
-        - message: CodeFlare name must be default-codeflare
-          rule: self.metadata.name == 'default-codeflare'
+        - message: MLflowOperator name must be default-mlflowoperator
+          rule: self.metadata.name == 'default-mlflowoperator'
     served: true
     storage: true
     subresources:
